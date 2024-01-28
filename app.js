@@ -13,10 +13,7 @@ const userRoute = require("./api/userRoute");
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://quotify-frontend-two.vercel.app",
-    ],
+    origin: ["https://quotify-frontend-two.vercel.app"],
     credentials: true,
   })
 );
