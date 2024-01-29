@@ -7,7 +7,7 @@ const options = {
   secure: process.env.NODE_ENV === "production",
   expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
   maxAge: 1000 * 60 * 60 * 24 * 7,
-  sameSite: "none",
+  sameSite: "strict",
 };
 
 const userRegistration = async (req, res) => {
