@@ -7,7 +7,7 @@ const options = {
   secure: process.env.NODE_ENV === "production",
   expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
   maxAge: 1000 * 60 * 60 * 24 * 7,
-  sameSite: "strict",
+  sameSite: "none",
 };
 
 const userRegistration = async (req, res) => {
@@ -92,7 +92,10 @@ const userAutoLogin = async (req, res) => {
 
 const userLogout = (req, res) => {
   try {
-    res.status(200).clearCookie("token").json({ msg: "User Logged Out" });
+    res
+      .status(200)
+      .clearCookie("token", options)
+      .json({ msg: "User Logged Out" });
   } catch (error) {
     res.status(400).send("Something went wrong while logging out user", error);
   }
