@@ -15,6 +15,7 @@ app.use(
   cors({
     origin: [
       "https://quotify-frontend-two.vercel.app",
+      "https://quotify-vvh1.onrender.com",
       "http://localhost:3000",
     ],
     credentials: true,
