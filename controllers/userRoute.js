@@ -2,11 +2,17 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const getJwtToken = require("../TokenGenerator");
 
-const options = {
+const loginOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
   maxAge: 1000 * 60 * 60 * 24 * 7,
+  sameSite: "none",
+};
+
+const logoutOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
   sameSite: "none",
 };
 
@@ -55,7 +61,7 @@ const userLogin = async (req, res) => {
 
     res
       .status(200)
-      .cookie("token", token, options)
+      .cookie("token", token, loginOptions)
       .json({
         user: {
           email: validUser.email,
@@ -79,7 +85,7 @@ const userAutoLogin = async (req, res) => {
   // const decodedToken = jwt.verify(token, secretKey);
   res
     .status(200)
-    .cookie("token", token, options)
+    .cookie("token", token, loginOptions)
     .json({
       user: {
         email: loggedUser.email,
@@ -94,7 +100,7 @@ const userLogout = (req, res) => {
   try {
     res
       .status(200)
-      .clearCookie("token", options)
+      .clearCookie("token", logoutOptions)
       .json({ msg: "User Logged Out" });
   } catch (error) {
     res.status(400).send("Something went wrong while logging out user", error);
